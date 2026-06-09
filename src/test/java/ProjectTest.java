@@ -1,33 +1,38 @@
-import com.codeborne.selenide.SelenideElement;
 import org.testng.annotations.Test;
 
-import static com.codeborne.selenide.Selectors.byText;
-import static com.codeborne.selenide.Selenide.*;
-
+import static dict.Elements.PASSWORD;
+import static dict.Elements.USER;
 
 public class ProjectTest extends BaseTest {
 
-    @Test
+    private static final String PROJECT_NAME = "TMS01";
+    private static final String PROJECT_CODE = "TMS01";
+
+    @Test(description = "Проверка создания проекта")
     public void checkCreateProject() {
-        loginPage.openPage();
-        loginPage.login("anna.atsulus@gmail.com", "atsulus1988");
-        $(byText("Create new project")).click();
-        $("#project-name").setValue("TMSkills");
-        $("#project-code").setValue("TMS01");
-        $(byText("Create project")).click();
-        open("/projects");
-        deleteProject("TMS02");
+        loginPage.openPage()
+                 .isPageOpened()
+                 .login(USER, PASSWORD);
+        projectPage.isPageOpened()
+                   .createProject(PROJECT_NAME, PROJECT_CODE)
+                   .clickButtonCreateProject()
+                   .verifyProjectUrl(PROJECT_CODE);
+        projectsPage.openPage()
+                    .isPageOpened()
+                    .checkTitleProjectsPage()
+                    .verifyProjectInList(PROJECT_NAME);
     }
 
-    public void deleteProject(String projectName) {
-        loginPage.openPage();
-        loginPage.login("anna.atsulus@gmail.com", "atsulus1988");
-        $(byText(projectName))
-                .ancestor("tr")
-                .find("button[aria=label='Open action menu']")
-                .click();
-        $("[data-testid=remove]").click();
-        $x("//span[text()='Delete project']").click();
-
+    @Test(description = "Проверка удаления проекта")
+    public void checkDeleteProject() {
+        loginPage.openPage()
+                 .isPageOpened()
+                 .login(USER, PASSWORD);
+        projectPage.createProject(PROJECT_NAME, PROJECT_CODE)
+                   .clickButtonCreateProject();
+        projectsPage.openPage()
+                    .isPageOpened();
+        projectPage.deleteProject(PROJECT_NAME);
+        projectsPage.verifyProjectInList(PROJECT_NAME);
     }
 }
