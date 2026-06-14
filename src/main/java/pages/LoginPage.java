@@ -2,6 +2,7 @@ package pages;
 
 import com.codeborne.selenide.Selenide;
 import com.codeborne.selenide.SelenideElement;
+import lombok.extern.log4j.Log4j2;
 
 import static com.codeborne.selenide.Condition.visible;
 import static com.codeborne.selenide.Selectors.byText;
@@ -10,6 +11,7 @@ import static com.codeborne.selenide.Selenide.$;
 import static com.codeborne.selenide.Selenide.sleep;
 import static dict.Elements.SIGN_IN;
 
+@Log4j2
 public class LoginPage extends BasePage {
 
     private final String LOGIN = "[name=email]";
@@ -17,11 +19,13 @@ public class LoginPage extends BasePage {
     private final String EXPECTED_TITLE = "Log in to your account";
 
     public LoginPage openPage() {
+        log.info("Открытие страницы авторизации");
         Selenide.open("/login");
         return this;
     }
 
     public LoginPage login(String user, String password) {
+        log.info("Авторизация пользователя с логином '{}' и паролем '{}'", user, password);
         sleep(10000);
         $(shadowCss("#accept", "#usercentrics-cmp-ui")).click();
         $(LOGIN).setValue(user);
@@ -29,8 +33,10 @@ public class LoginPage extends BasePage {
         $(byText(SIGN_IN)).click();
         return this;
     }
+
     @Override
     public LoginPage isPageOpened() {
+        log.info("Проверка, открыта ли страница авторизации");
         $(byText(EXPECTED_TITLE)).shouldBe(visible);
         return this;
     }
