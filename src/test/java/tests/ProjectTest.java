@@ -12,7 +12,6 @@ public class ProjectTest extends BaseTest {
     private static final String PROJECT_NAME = "TMS01";
     private static final String PROJECT_CODE = "TMS01";
 
-    @Step("Cоздание проекта с хард данными")
     @Test(description = "Проверка создания проекта с хард данными")
     public void checkCreateProject() {
         loginPage.openPage()
@@ -28,8 +27,6 @@ public class ProjectTest extends BaseTest {
                     .verifyProjectInList(PROJECT_NAME);
         checkDeleteProject();
     }
-
-    @Step("Удаление проекта с хард данными")
     @Test(description = "Проверка удаления проекта с хард данными")
     public void checkDeleteProject() {
         loginPage.openPage()
@@ -42,9 +39,6 @@ public class ProjectTest extends BaseTest {
         projectPage.deleteProject(PROJECT_NAME);
         projectsPage.verifyProjectInList(PROJECT_NAME);
     }
-
-
-    @Step("Создание проекта с данными getProject")
     @Test(description = "Проверка создания проекта с генерированными данными")
     public void checkCreateProject(Project project) {
         loginPage.openPage()
@@ -60,8 +54,6 @@ public class ProjectTest extends BaseTest {
                 .verifyProjectInList(project.getProjectName());
         checkDeleteProject();
     }
-
-    @Step("Удаление проекта с генерированными данными getProject")
     @Test(description = "Проверка удаления проекта с генерированными данными")
     public void checkDeleteProjectWithGeneratedData(Project project) {
         loginPage.openPage()
