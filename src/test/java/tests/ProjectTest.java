@@ -27,6 +27,7 @@ public class ProjectTest extends BaseTest {
                     .verifyProjectInList(PROJECT_NAME);
         checkDeleteProject();
     }
+
     @Test(description = "Проверка удаления проекта с хард данными")
     public void checkDeleteProject() {
         loginPage.openPage()
@@ -39,6 +40,7 @@ public class ProjectTest extends BaseTest {
         projectPage.deleteProject(PROJECT_NAME);
         projectsPage.verifyProjectInList(PROJECT_NAME);
     }
+
     @Test(description = "Проверка создания проекта с генерированными данными")
     public void checkCreateProject(Project project) {
         loginPage.openPage()
@@ -54,6 +56,7 @@ public class ProjectTest extends BaseTest {
                 .verifyProjectInList(project.getProjectName());
         checkDeleteProject();
     }
+
     @Test(description = "Проверка удаления проекта с генерированными данными")
     public void checkDeleteProjectWithGeneratedData(Project project) {
         loginPage.openPage()
