@@ -6,21 +6,22 @@ import org.testng.Assert;
 import org.testng.annotations.AfterMethod;
 import org.testng.annotations.Test;
 import static adapters.ProjectAdapter.createProject;
-import static io.restassured.RestAssured.given;
 
 public class ProjectAPITest {
 
-    private final String CODE = "qa";
+    private final String CODE = "AT2";
     @Test
     public void checkcreateProject() {
+
         Projectrequest rq = Projectrequest.builder()
                 .title("qa23")
-                .code("348")
+                .code("AT2")
                 .description("fgddfgdf")
                 .access("all")
                 .group("test")
                 .build();
        ProjectResponse rs = createProject(rq);
+
         Assert.assertTrue(rs.status);
         Assert.assertEquals(rs.result.code, "348");
     }
@@ -30,5 +31,4 @@ public class ProjectAPITest {
     public void deleteProject() {
         ProjectAdapter.deleteProject(CODE);
     }
-
 }
